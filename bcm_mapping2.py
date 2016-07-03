@@ -10,7 +10,7 @@ def open_xls(filepath):
 
 #patterns
 pt_bcm = re.compile('(//|/\*)?[^\n]*certificateServiceClient\.(sign|signWithInfo|verify|encrypt|decrypt|decode|encode|getMerCert|getValidCert|getValidCertInfo)\(\"(\w+)\"')
-pt_ch = re.compile('\.setChannelSystemId\(\"(\w+)\"\)|\"channelApi\",\"(\w+)\"')
+pt_ch = re.compile('\.setChannelSystemId\(\"(\w+)\"\)|\s*\"channelApi\",\"(\w+)\"')
 pt_tr = re.compile('\.setTransTypeId\(\"(\w+)\"\);')
 
 def biz(xls, txt):
@@ -61,8 +61,14 @@ def biz(xls, txt):
             else:
                 print 'annotationed bcmcode:',code
     print 'step2 finished. bcm_grvid_map:'
-    print bcm_grvid_map
+    #print bcm_grvid_map
+    cnt = 0
+    keylist = sorted(bcm_grvid_map.items(), key = lambda a: a[0])
+    for k,v in keylist:
+        cnt += 1
+        print '{}  {} : {}'.format(cnt, k, v)
     print '=='*20
+    return
 
     #step 3
     with open(txt) as f:
@@ -76,7 +82,8 @@ def biz(xls, txt):
 
     #step 4
     count = 0
-    for umbcm in bcmcodes_unmapped:
+    #遍历bcmcodes_unmapped
+    for umbcm in bcmcodes_unmapped: 
         if bcm_grvid_map.has_key(umbcm):
             #step 4.1
             pt_bcm = re.compile('(//|/\*)?[^\n]*certificateServiceClient\.(sign|signWithInfo|verify|encrypt|decrypt|decode|encode|getMerCert|getValidCert|getValidCertInfo)\(\"({})\"'.format(umbcm))
@@ -132,8 +139,8 @@ def biz(xls, txt):
     print res_csi_map
 
 if __name__ == '__main__':
-    xls = 'C:\\Users\\zh0uy\\Desktop\\bcm\\groovy_contents.xls'
-    txt = 'C:\\Users\\zh0uy\\Desktop\\bcm\\data\\bcmcode_unmapped.txt'
+    xls = 'C:\\Users\\zh0uy\\Desktop\\bcm\\bcm\\groovy_contents.xls'
+    txt = 'C:\\Users\\zh0uy\\Desktop\\bcm\\bcm\\data\\bcmcode_unmapped.txt'
     start = time.time()
     biz(xls, txt)
     end = time.time()
