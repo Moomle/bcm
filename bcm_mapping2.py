@@ -1,5 +1,5 @@
 #-*-encoding:utf8-*-
-import xlrd, os, sys, re, time
+import xlrd, os, sys, re, time, platform
 
 def open_xls(filepath):
     try:
@@ -139,8 +139,15 @@ def biz(xls, txt):
     print res_csi_map
 
 if __name__ == '__main__':
-    xls = 'C:\\Users\\zh0uy\\Desktop\\bcm\\bcm\\groovy_contents.xls'
-    txt = 'C:\\Users\\zh0uy\\Desktop\\bcm\\bcm\\data\\bcmcode_unmapped.txt'
+    sys_type = platform.system()
+    xls = ''
+    txt = ''
+    if sys_type == 'Windows':
+        xls = 'groovy_contents.xls'
+        txt = 'data\\bcmcode_unmapped.txt'
+    else:
+        xls = './groovy_content.xls'
+        txt = './data/bcmcode_unmapped.txt'
     start = time.time()
     biz(xls, txt)
     end = time.time()
