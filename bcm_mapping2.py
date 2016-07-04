@@ -143,10 +143,10 @@ if __name__ == '__main__':
     xls = ''
     txt = ''
     if sys_type == 'Windows':
-        xls = 'groovy_contents.xls'
+        xls = 'source\\groovy_contents.xls'
         txt = 'data\\bcmcode_unmapped.txt'
     else:
-        xls = './groovy_content.xls'
+        xls = './source/groovy_content.xls'
         txt = './data/bcmcode_unmapped.txt'
     start = time.time()
     biz(xls, txt)
